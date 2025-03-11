@@ -7,7 +7,7 @@
 
 import Foundation
 
-var numArray = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+var numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 var userNumArray: [Int] = []
 var answerNumArray: [Int] = []
 var num: Int
@@ -17,6 +17,9 @@ var ballCount = 0
 
 while answerNumArray.count < 3 {
     num = numArray.randomElement()!
+    if answerNumArray.isEmpty && num == 0 {
+        continue
+    }
     if answerNumArray.contains(num) {
         continue
     }
