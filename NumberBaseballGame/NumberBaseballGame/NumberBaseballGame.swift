@@ -15,6 +15,8 @@ class NumberBaseballGame {
     var tmp = 0
     var strikeCount = 0
     var ballCount = 0
+    var attemptCountsPerGame: [Int] = []
+    var attemptCount = 0
     
     func generateUniqueAnswerNumbers() {
         while answerNumArray.count < 3 {
@@ -40,6 +42,7 @@ class NumberBaseballGame {
                 print("올바르지 않은 입력값입니다")
                 continue
             }
+            attemptCount += 1
             
             tmp = userNum
             print(userNumArray)
@@ -87,8 +90,16 @@ class NumberBaseballGame {
             
             if strikeCount == 3 {
                 print("정답입니다!")
+                attemptCountsPerGame.append(attemptCount)
                 break
             }
+        }
+    }
+    
+    func showGameRecords() {
+        print("< 게임 기록 보기 >")
+        for (index, item) in attemptCountsPerGame.enumerated() {
+            print("\(index + 1)번째 게임 : 시도 횟수 - \(item)")
         }
     }
 }

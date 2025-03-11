@@ -23,7 +23,7 @@ while true {
         game.generateUniqueAnswerNumbers()
         game.startNumberBaseballGame()
     } else if selectedNumber == 2 {
-        print("2번을 선택했습니다")
+        game.showGameRecords()
         continue
     } else {
         print("< 숫자 야구 게임을 종료합니다 >")
