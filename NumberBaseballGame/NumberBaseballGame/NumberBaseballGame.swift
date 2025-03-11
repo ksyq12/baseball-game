@@ -46,12 +46,15 @@ class NumberBaseballGame {
             userNumArray = []
             
             while tmp > 0 {
-                if tmp % 10 != 0 && !userNumArray.contains(tmp % 10) {
+                if !userNumArray.contains(tmp % 10) {
                     userNumArray.insert(tmp % 10, at: 0)
                     tmp /= 10
                 } else {
                     print("올바르지 않은 입력값입니다2")
-                    userNumArray = []
+                    break
+                }
+                if userNumArray.count == 2 && tmp == 0 {
+                    print("올바르지 않은 입력값입니다4")
                     break
                 }
             }
