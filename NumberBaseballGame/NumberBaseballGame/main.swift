@@ -2,84 +2,32 @@
 //  main.swift
 //  NumberBaseballGame
 //
-//  Created by shinyoungkim on 3/10/25.
+//  Created by shinyoungkim on 3/11/25.
 //
 
 import Foundation
 
-var numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-var userNumArray: [Int] = []
-var answerNumArray: [Int] = []
-var num: Int
-var tmp: Int
-var strikeCount = 0
-var ballCount = 0
+let game = NumberBaseballGame()
 
-while answerNumArray.count < 3 {
-    num = numArray.randomElement()!
-    if answerNumArray.isEmpty && num == 0 {
-        continue
-    }
-    if answerNumArray.contains(num) {
-        continue
-    }
-    answerNumArray.append(num)
-}
-
-print("< 게임을 시작합니다 >")
-print("정답: \(answerNumArray)")
 while true {
-    print("숫자를 입력하세요")
+    print("환영합니다! 원하시는 번호를 입력해주세요")
+    print("1. 게임 시작하기  2. 게임 기록 보기  3. 종료하기")
     guard let userInput = readLine(),
-          let userNum = Int(userInput), userNum / 1000 == 0
-    else {
-        print("올바르지 않은 입력값입니다")
+          let selectedNumber = Int(userInput),
+        selectedNumber == 1 || selectedNumber == 2 || selectedNumber == 3 else {
+        print("올바른 숫자를 입력해주세요!")
         continue
     }
     
-    tmp = userNum
-    print(userNumArray)
-    userNumArray = []
-    
-    while tmp > 0 {
-        if tmp % 10 != 0 && !userNumArray.contains(tmp % 10) {
-            userNumArray.insert(tmp % 10, at: 0)
-            tmp /= 10
-        } else {
-            print("올바르지 않은 입력값입니다2")
-            userNumArray = []
-            break
-        }
-    }
-    print(userNumArray)
-        
-    if userNumArray.count != 3 {
-        print("올바르지 않은 입력값입니다3")
+    if selectedNumber == 1 {
+        game.generateUniqueAnswerNumbers()
+        game.startNumberBaseballGame()
+    } else if selectedNumber == 2 {
+        print("2번을 선택했습니다")
         continue
-    }
-    
-    print(strikeCount)
-    print(ballCount)
-    strikeCount = 0
-    ballCount = 0
-    
-    for (index, num) in userNumArray.enumerated() {
-        if num == answerNumArray[index] {
-            strikeCount += 1
-        } else if answerNumArray.contains(num) {
-            ballCount += 1
-        }
-    }
-    print(userNumArray)
-    
-    if strikeCount == 0 && ballCount == 0 {
-        print("Nothing")
     } else {
-        print("\(strikeCount)스트라이크 \(ballCount)볼")
-    }
-    
-    if strikeCount == 3 {
-        print("정답입니다!")
+        print("< 숫자 야구 게임을 종료합니다 >")
         break
     }
 }
+
