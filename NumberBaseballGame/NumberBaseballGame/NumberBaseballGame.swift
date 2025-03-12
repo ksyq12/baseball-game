@@ -1,5 +1,5 @@
 //
-//  main.swift
+//  NumberBaseballGame.swift
 //  NumberBaseballGame
 //
 //  Created by shinyoungkim on 3/10/25.
@@ -8,22 +8,32 @@
 import Foundation
 
 class NumberBaseballGame {
+    // 사용할 숫자 배열
     var numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    // 사용자 입력 숫자 배열
     var userNumArray: [Int] = []
+    // 정답 숫자 배열
     var answerNumArray: [Int] = []
+    // 임시 숫자 저장 변수
     var num = 0
     var tmp = 0
+    // 스트라이크와 볼 개수
     var strikeCount = 0
     var ballCount = 0
+    // 게임 별 시도 횟수 저장 배열
     var attemptCountsPerGame: [Int] = []
+    // 현재 게임 시도 횟수
     var attemptCount = 0
     
+    // 서로 다른 3자리 정답 숫자 생성
     func generateUniqueAnswerNumbers() {
         while answerNumArray.count < 3 {
             num = numArray.randomElement()!
+            // 첫번째 숫자가 0이면 다시 선택
             if answerNumArray.isEmpty && num == 0 {
                 continue
             }
+            // 중복 숫자 방지
             if answerNumArray.contains(num) {
                 continue
             }
@@ -31,9 +41,9 @@ class NumberBaseballGame {
         }
     }
     
+    // 숫자 야구 게임 시작
     func startNumberBaseballGame() {
         print("< 게임을 시작합니다 >")
-        print("정답: \(answerNumArray)")
         while true {
             print("숫자를 입력하세요")
             guard let userInput = readLine(),
@@ -45,34 +55,33 @@ class NumberBaseballGame {
             attemptCount += 1
             
             tmp = userNum
-            print(userNumArray)
             userNumArray = []
             
+            // 사용자 입력값을 개별 숫자로 분리하여 배열에 저장
             while tmp > 0 {
                 if !userNumArray.contains(tmp % 10) {
                     userNumArray.insert(tmp % 10, at: 0)
                     tmp /= 10
                 } else {
-                    print("올바르지 않은 입력값입니다2")
+                    print("올바르지 않은 입력값입니다")
                     break
                 }
                 if userNumArray.count == 2 && tmp == 0 {
-                    print("올바르지 않은 입력값입니다4")
+                    print("올바르지 않은 입력값입니다")
                     break
                 }
             }
-            print(userNumArray)
                 
             if userNumArray.count != 3 {
-                print("올바르지 않은 입력값입니다3")
+                print("올바르지 않은 입력값입니다")
                 continue
             }
             
-            print(strikeCount)
-            print(ballCount)
+            // 스트라이크 및 볼 개수 초기화
             strikeCount = 0
             ballCount = 0
             
+            // 스트라이크 및 볼 개수 판별
             for (index, num) in userNumArray.enumerated() {
                 if num == answerNumArray[index] {
                     strikeCount += 1
@@ -80,7 +89,6 @@ class NumberBaseballGame {
                     ballCount += 1
                 }
             }
-            print(userNumArray)
             
             if strikeCount == 0 && ballCount == 0 {
                 print("Nothing")
@@ -88,6 +96,7 @@ class NumberBaseballGame {
                 print("\(strikeCount)스트라이크 \(ballCount)볼")
             }
             
+            // 정답을 맞추었을 경우
             if strikeCount == 3 {
                 print("정답입니다!")
                 attemptCountsPerGame.append(attemptCount)
@@ -96,6 +105,7 @@ class NumberBaseballGame {
         }
     }
     
+    // 게임 기록 출력
     func showGameRecords() {
         print("< 게임 기록 보기 >")
         for (index, item) in attemptCountsPerGame.enumerated() {
