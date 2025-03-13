@@ -9,7 +9,7 @@ import Foundation
 
 class NumberBaseballGame {
     // 사용할 숫자 배열
-    var numArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    var numArray = [Int](0...9)
     // 사용자 입력 숫자 배열
     var userNumArray: [Int] = []
     // 정답 숫자 배열
