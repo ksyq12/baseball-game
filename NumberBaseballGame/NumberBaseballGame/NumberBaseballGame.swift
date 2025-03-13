@@ -45,50 +45,12 @@ class NumberBaseballGame {
     func startNumberBaseballGame() {
         print("< 게임을 시작합니다 >")
         while true {
-            print("숫자를 입력하세요")
-            guard let userInput = readLine(),
-                  let userNum = Int(userInput), userNum / 1000 == 0
-            else {
-                print("올바르지 않은 입력값입니다")
-                continue
-            }
+            guard let validUserInput = processUserInput() else { continue }
+            userNumArray = validUserInput
+            
             attemptCount += 1
             
-            remainingNumber = userNum
-            userNumArray = []
-            
-            // 사용자 입력값을 개별 숫자로 분리하여 배열에 저장
-            while remainingNumber > 0 {
-                if !userNumArray.contains(remainingNumber % 10) {
-                    userNumArray.insert(remainingNumber % 10, at: 0)
-                    remainingNumber /= 10
-                } else {
-                    print("올바르지 않은 입력값입니다")
-                    break
-                }
-                if userNumArray.count == 2 && remainingNumber == 0 {
-                    print("올바르지 않은 입력값입니다")
-                    break
-                }
-            }
-                
-            if userNumArray.count != 3 {
-                print("올바르지 않은 입력값입니다")
-                continue
-            }
-            
-            // 스트라이크 및 볼 개수 초기화
-            strikeCount = 0
-            ballCount = 0
-            
-            // 스트라이크 및 볼 개수 판별
-            for (index, num) in userNumArray.enumerated() {
-                if num == answerNumArray[index] {
-                    strikeCount += 1
-                } else if answerNumArray.contains(num) {
-                    ballCount += 1
-                }
-            }
+            (strikeCount, ballCount) = calculateStrikeAndBall()
             
             if strikeCount == 0 && ballCount == 0 {
                 print("Nothing")
@@ -111,5 +73,57 @@ class NumberBaseballGame {
         for (index, item) in attemptCountsPerGame.enumerated() {
             print("\(index + 1)번째 게임 : 시도 횟수 - \(item)")
         }
+    }
+    
+    func processUserInput() -> [Int]? {
+        print("숫자를 입력하세요")
+        guard let userInput = readLine(),
+              let userNum = Int(userInput), userNum / 1000 == 0
+        else {
+            print("올바르지 않은 입력값입니다")
+            return nil
+        }
+        attemptCount += 1
+        
+        remainingNumber = userNum
+        userNumArray = []
+        
+        // 사용자 입력값을 개별 숫자로 분리하여 배열에 저장
+        while remainingNumber > 0 {
+            if !userNumArray.contains(remainingNumber % 10) {
+                userNumArray.insert(remainingNumber % 10, at: 0)
+                remainingNumber /= 10
+            } else {
+                print("올바르지 않은 입력값입니다")
+                break
+            }
+            if userNumArray.count == 2 && remainingNumber == 0 {
+                print("올바르지 않은 입력값입니다")
+                break
+            }
+        }
+            
+        if userNumArray.count != 3 {
+            print("올바르지 않은 입력값입니다")
+        }
+        
+        return userNumArray
+    }
+    
+    func calculateStrikeAndBall() -> (strike: Int, ball: Int) {
+        // 스트라이크 및 볼 개수 초기화
+        strikeCount = 0
+        ballCount = 0
+        
+        // 스트라이크 및 볼 개수 판별
+        for (index, num) in userNumArray.enumerated() {
+            if num == answerNumArray[index] {
+                strikeCount += 1
+            } else if answerNumArray.contains(num) {
+                ballCount += 1
+            }
+        }
+        
+        return (strikeCount, ballCount)
     }
 }
