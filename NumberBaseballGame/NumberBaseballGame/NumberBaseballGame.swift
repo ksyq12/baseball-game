@@ -15,8 +15,8 @@ class NumberBaseballGame {
     // 정답 숫자 배열
     var answerNumArray: [Int] = []
     // 임시 숫자 저장 변수
-    var num = 0
-    var tmp = 0
+    var randomDigit = 0
+    var remainingDigits = 0
     // 스트라이크와 볼 개수
     var strikeCount = 0
     var ballCount = 0
@@ -28,16 +28,16 @@ class NumberBaseballGame {
     // 서로 다른 3자리 정답 숫자 생성
     func generateUniqueAnswerNumbers() {
         while answerNumArray.count < 3 {
-            num = numArray.randomElement()!
+            randomDigit = numArray.randomElement()!
             // 첫번째 숫자가 0이면 다시 선택
-            if answerNumArray.isEmpty && num == 0 {
+            if answerNumArray.isEmpty && randomDigit == 0 {
                 continue
             }
             // 중복 숫자 방지
-            if answerNumArray.contains(num) {
+            if answerNumArray.contains(randomDigit) {
                 continue
             }
-            answerNumArray.append(num)
+            answerNumArray.append(randomDigit)
         }
     }
     
@@ -54,19 +54,19 @@ class NumberBaseballGame {
             }
             attemptCount += 1
             
-            tmp = userNum
+            remainingDigits = userNum
             userNumArray = []
             
             // 사용자 입력값을 개별 숫자로 분리하여 배열에 저장
-            while tmp > 0 {
-                if !userNumArray.contains(tmp % 10) {
-                    userNumArray.insert(tmp % 10, at: 0)
-                    tmp /= 10
+            while remainingDigits > 0 {
+                if !userNumArray.contains(remainingDigits % 10) {
+                    userNumArray.insert(remainingDigits % 10, at: 0)
+                    remainingDigits /= 10
                 } else {
                     print("올바르지 않은 입력값입니다")
                     break
                 }
-                if userNumArray.count == 2 && tmp == 0 {
+                if userNumArray.count == 2 && remainingDigits == 0 {
                     print("올바르지 않은 입력값입니다")
                     break
                 }
