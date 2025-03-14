@@ -7,7 +7,7 @@
 
 import Foundation
 
-let game = NumberBaseballGame()
+let game = GameManager()
 
 while true {
     print("환영합니다! 원하시는 번호를 입력해주세요")
@@ -20,10 +20,9 @@ while true {
     }
     
     if selectedNumber == 1 {
-        game.generateUniqueAnswerNumbers()
         game.startNumberBaseballGame()
     } else if selectedNumber == 2 {
-        game.showGameRecords()
+        game.showRecords()
         continue
     } else {
         print("< 숫자 야구 게임을 종료합니다 >")
